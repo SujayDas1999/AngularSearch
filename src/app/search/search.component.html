@@ -1,0 +1,52 @@
+<div class="container text-center">
+  <h1>{{ title }}</h1>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="search-hero">
+      <input
+        class="form-control"
+        type="text"
+        name="search"
+        autocomplete="off"
+        [value]="search"
+        (change)="onChange($event)"
+      />
+      <button (click)="filter(true)">Search</button>
+      <button (click)="filter(false)">Clear Search</button>
+    </div>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Hero Name</th>
+          <th>Country</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let hero of filtered ? filteredHeros : heroes">
+          <td>{{ hero.id }}</td>
+          <td>{{ hero.name }}</td>
+          <td>
+            <button (click)="showDialog(hero.id)">
+              {{ hero.country }}
+            </button>
+          </td>
+          <!-- <td><button (click)="showDialog(hero.id)">Show details</button></td> -->
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="card flex justify-content-center">
+    <p-dialog header="Header" [(visible)]="visible" [style]="{ width: '50vw' }">
+      <div *ngIf="details">
+        <tr>
+          <td>{{ details.componentName }}</td>
+          <td>{{ details.version }}</td>
+        </tr>
+      </div>
+    </p-dialog>
+  </div>
+
+  <app-upload (fileData)="getFileData($event)"></app-upload>
+</div>
